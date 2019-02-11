@@ -6,6 +6,8 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 
+import com.orbotix.Sphero;
+
 public class MainActivity extends AppCompatActivity {
 
     @Override
@@ -22,6 +24,7 @@ public class MainActivity extends AppCompatActivity {
                 text.setText("Florent et Clément");
             }
         });
+
 
     }
 
