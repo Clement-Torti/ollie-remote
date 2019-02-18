@@ -7,14 +7,18 @@ import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.TextView;
 
+
+import com.orbotix.Ollie;
 import com.orbotix.Sphero;
+import com.orbotix.joystick.api.JoystickView;
+
 
 public class MainActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
+        
         // Vue
         this.getWindow().setFlags(
                 WindowManager.LayoutParams.FLAG_FULLSCREEN,
