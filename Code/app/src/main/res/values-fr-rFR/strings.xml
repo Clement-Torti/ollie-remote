@@ -1,4 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="app_name">Ollie</string>
+    <string name="menu">Accueil</string>
+    <string name="info">Choix de pilotage du Ollie</string>
+    <string name="joystickChoice">Joystick</string>
+    <string name="padChoice">Pad</string>
+    <string name="infoChoice">Infos</string>
+    <string name="connectionChoice">Connexion</string>
 </resources>

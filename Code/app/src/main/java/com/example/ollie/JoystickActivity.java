@@ -8,16 +8,9 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
-import android.view.WindowManager;
-import android.view.textclassifier.TextClassification;
-import android.view.textclassifier.TextLinks;
-import android.widget.Button;
-import android.widget.TextView;
 
-
+import com.example.ollie.model.VirtualOllie;
 import com.orbotix.ConvenienceRobot;
-import com.orbotix.Ollie;
-import com.orbotix.Sphero;
 import com.orbotix.common.DiscoveryAgent;
 import com.orbotix.common.DiscoveryAgentEventListener;
 import com.orbotix.common.DiscoveryException;
@@ -26,45 +19,46 @@ import com.orbotix.common.RobotChangedStateListener;
 import com.orbotix.joystick.api.JoystickEventListener;
 import com.orbotix.joystick.api.JoystickView;
 import com.orbotix.le.DiscoveryAgentLE;
-import com.orbotix.macro.cmd.Calibrate;
 
-import java.security.Permission;
-import java.util.ArrayList;
 import java.util.List;
 
+public class JoystickActivity extends BaseActivity implements DiscoveryAgentEventListener,
+        RobotChangedStateListener {
 
-public class MainActivity extends AppCompatActivity implements DiscoveryAgentEventListener,
-                                                                RobotChangedStateListener{
     private static int REQUEST_CODE_LOCATION_PERMISSION = 42;
     private JoystickView joystick;
     private DiscoveryAgent discoverRobot;
     private ConvenienceRobot ollie;
 
 
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_joystick);
 
-        // Vue
-        this.getWindow().setFlags(
-                WindowManager.LayoutParams.FLAG_FULLSCREEN,
-                WindowManager.LayoutParams.FLAG_FULLSCREEN);
-        this.getSupportActionBar().hide();
+        // accessBluetooth();
+    }
 
-        setContentView(R.layout.activity_main);
 
-        // Access au bluetooth
+
+    /*
+     * Tente d'accéder au bluetooth en faisant une demande utilisateur
+     */
+    private void accessBluetooth() {
         if(PermissionChecker.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) == -1) {
             String[] permissions = new String[1];
             permissions[0] = (Manifest.permission.ACCESS_COARSE_LOCATION);
             requestPermissions(permissions, REQUEST_CODE_LOCATION_PERMISSION);
         } else {
+            // On a deja acces au bluetooth, on lance la recherche de robots
             setUpDiscovery();
         }
-
-
     }
 
+    /*
+     * Méthode commancant à chercher les robots disponbiles à l'utilisation
+     */
     private void setUpDiscovery() {
         try {
             discoverRobot = DiscoveryAgentLE.getInstance();
@@ -79,39 +73,42 @@ public class MainActivity extends AppCompatActivity implements DiscoveryAgentEve
 
     }
 
-    // Permet de récupérer tous les robots avec lesquels on peut se connecter
+    // Permet de récupérer tous les robots avec lesquels on peut se connecter, on choisi le 1er (Qui doit correspondre au plus proche)
     @Override
     public void handleRobotsAvailable(List<Robot> list) {
         discoverRobot.connect(list.get(0));
     }
 
 
+    // Lorsque le robot qui nous intéresse change d'état
     @Override
-    public void handleRobotChangedState(Robot robot, RobotChangedStateNotificationType type) {
+    public void handleRobotChangedState(Robot robot, RobotChangedStateListener.RobotChangedStateNotificationType type) {
         switch (type) {
             case Online:
-                System.out.println("Robot online");
                 discoverRobot.stopDiscovery();
-
-                ollie = new Ollie(robot);
+                ollie = new VirtualOllie(robot);
                 // Setup joystick view and event
                 setupJoystick();
-            case Connected:
-                System.out.println("Robot connecté");
-
             case Disconnected:
-                /*
-                System.out.println("Robot deconnecté");
-                ollie = null;
+                // On vérifie que ça soit le bon robot qui ce soit déconnecté
+                if (robot == ollie.getRobot()) {
+                    ollie = null;
 
-                try {
-                    discoverRobot.startDiscovery(this);
-                } catch (DiscoveryException e) {
-                    e.printStackTrace();
-                }*/
+                    try {
+                        discoverRobot.startDiscovery(this);
+                    } catch (DiscoveryException e) {
+                        e.printStackTrace();
+                    }
+                }
+
         }
     }
 
+
+    /*
+     * Met en place le code pour le fonctionnement du joystickView:
+     * La récupération des évènements touchEvent et le traitement associé pour faire avancer le robot
+     */
     private void setupJoystick() {
         // récupère le joystick
         joystick = findViewById(R.id.joystick);
@@ -121,7 +118,6 @@ public class MainActivity extends AppCompatActivity implements DiscoveryAgentEve
             @Override
             public boolean onTouch(View v, MotionEvent event) {
                 joystick.interpretMotionEvent(event);
-
                 return true;
             }
         });
@@ -131,26 +127,16 @@ public class MainActivity extends AppCompatActivity implements DiscoveryAgentEve
 
             @Override
             public void onJoystickBegan() {
-                // Here you can do something when the user starts using the joystick.
-                System.out.println("onJoystickBegan");
             }
 
             @Override
             public void onJoystickMoved(double distanceFromCenter, double angle) {
-                // Here you can use the joystick input to drive the connected robot. You can easily do this with the
-                // ConvenienceRobot#drive() method
-                // Note that the arguments do flip here from the order of parameters
-                //_connectedRobot.drive((float)angle, (float)distanceFromCenter);
-                System.out.println("onJoystickMoved: " + distanceFromCenter + " " + angle);
                 if(ollie != null)
                     ollie.drive((float) angle, (float) distanceFromCenter);
             }
 
             @Override
             public void onJoystickEnded() {
-                // Here you can do something when the user stops touching the joystick. For example, we'll make it stop driving.
-                //_connectedRobot.stop();
-                System.out.println("onJoystickEnded");
                 if(ollie != null)
                     ollie.stop();
             }
@@ -158,14 +144,22 @@ public class MainActivity extends AppCompatActivity implements DiscoveryAgentEve
 
     }
 
+    /*
+     * Appelez lorsque l'utilisateur a répondu à la demande de permission
+     */
     @Override
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+        // on ne demande la permission que pour la Location, grantResult contient 1 resultat
+        if(requestCode == REQUEST_CODE_LOCATION_PERMISSION && grantResults[0] == PermissionChecker.PERMISSION_GRANTED) {
+            setUpDiscovery();
+        } else {
+            Log.d(permissions[0], "Acces refusé");
+        }
 
-        System.out.println("onRequest Methods");
-        setUpDiscovery();
 
     }
+
 
 
 }
