@@ -57,7 +57,7 @@ public class JoystickActivity extends BaseActivity implements DiscoveryAgentEven
     }
 
     /*
-     * Méthode commancant à chercher les robots disponbiles à l'utilisation
+     * Méthode commancant à chercher les robots disponibles à l'utilisation
      */
     private void setUpDiscovery() {
         try {
@@ -90,7 +90,7 @@ public class JoystickActivity extends BaseActivity implements DiscoveryAgentEven
                 // Setup joystick view and event
                 setupJoystick();
             case Disconnected:
-                // On vérifie que ça soit le bon robot qui ce soit déconnecté
+                // On vérifie que ça soit le bon robot qui se soit déconnecté
                 if (robot == ollie.getRobot()) {
                     ollie = null;
 
