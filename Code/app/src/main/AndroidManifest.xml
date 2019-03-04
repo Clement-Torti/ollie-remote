@@ -20,7 +20,6 @@
         android:hardwareAccelerated="false"
         android:largeHeap="true">
         <activity android:name=".InfosActivity"></activity>
-        <activity android:name=".ConnectionActivity" />
         <activity android:name=".PadActivity" />
         <activity android:name=".JoystickActivity" />
         <activity android:name=".AccueilActivity">
