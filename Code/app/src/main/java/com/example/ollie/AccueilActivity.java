@@ -81,7 +81,7 @@ public class AccueilActivity extends BaseActivity  implements DiscoveryAgentEven
      */
     public void joystickClick(View view) {
         if(RobotHandler.getRobot() != null) {
-            goToActivity(InfosActivity.class, new HashMap<String, Serializable>());
+            goToActivity(JoystickActivity.class, new HashMap<String, Serializable>());
         } else {
             System.out.println("Robot non connecté, action impossible");
         }
@@ -92,7 +92,7 @@ public class AccueilActivity extends BaseActivity  implements DiscoveryAgentEven
      */
     public void padClick(View view) {
         if(RobotHandler.getRobot() != null) {
-            goToActivity(InfosActivity.class, new HashMap<String, Serializable>());
+            goToActivity(PadActivity.class, new HashMap<String, Serializable>());
         } else {
             System.out.println("Robot non connecté, action impossible");
         }
