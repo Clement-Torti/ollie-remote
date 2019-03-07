@@ -11,10 +11,12 @@ import com.example.ollie.model.RobotHandler;
 import com.orbotix.ConvenienceRobot;
 
 import java.util.List;
+import java.util.Timer;
 
 public class PadActivity extends BaseActivity {
     private ConvenienceRobot ollie = RobotHandler.getRobot();
     private Path path;
+    private Timer timer;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -38,6 +40,9 @@ public class PadActivity extends BaseActivity {
     }
 
     private void interpretMotion(MotionEvent event) {
+        if(event.getAction() == MotionEvent.ACTION_DOWN) {
+
+        }
 
         // Si on enlève notre doigt de l'écran
         if (event.getAction() == MotionEvent.ACTION_UP) {

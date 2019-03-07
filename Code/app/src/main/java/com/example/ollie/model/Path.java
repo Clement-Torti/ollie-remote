@@ -7,16 +7,26 @@ public class Path {
 
     private List<Position> positions = new ArrayList<>();
 
-    public void addPosition(Position p) {
+    private List<Integer> times = new ArrayList<>();
+
+    public void addPosition(Position p, int time) {
+
         positions.add(p);
+        times.add(time);
     }
 
     public Position getPosition(int index) {
         return positions.get(index);
     }
 
-    public void clear() {
+    public Integer getTime(int index) {
+        return times.get(index);
+    }
+
+    public void clear()
+    {
         positions.clear();
+        times.clear();
     }
 
     public int size() { return positions.size(); }
@@ -44,6 +54,9 @@ public class Path {
             Position B = positions.get(i+1);
 
             double dist = Math.sqrt(Math.pow(A.getX() - B.getX(), 2) + Math.pow(A.getY()-B.getY(), 2));
+
+            // Convertir les pixels en mètre
+            dist = dist / 100;
 
             distances.add((float)dist);
         }
