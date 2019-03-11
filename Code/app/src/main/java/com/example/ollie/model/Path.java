@@ -6,62 +6,47 @@ import java.util.List;
 public class Path {
 
     private List<Position> positions = new ArrayList<>();
+    private static final int MAX_DIST = 50;
 
-    private List<Integer> times = new ArrayList<>();
 
-    public void addPosition(Position p, int time) {
+    public void addPosition(Position p) {
 
         positions.add(p);
-        times.add(time);
     }
 
-    public Position getPosition(int index) {
-        return positions.get(index);
-    }
-
-    public Integer getTime(int index) {
-        return times.get(index);
-    }
 
     public void clear()
     {
         positions.clear();
-        times.clear();
     }
 
     public int size() { return positions.size(); }
 
-    public List<Float> getAngles() {
-        List<Float> angles = new ArrayList<>();
 
-        for(int i=0; i<positions.size() - 1; i++) {
-            Position A = positions.get(i);
-            Position B = positions.get(i+1);
+    public float getAngle(int i) {
+        float angle;
 
-            double angle = Math.acos(Math.abs(A.getY() - B.getY()) / Math.sqrt(Math.pow(A.getX() - B.getX(), 2) + Math.pow(A.getY()-B.getY(), 2)));
+        Position A = positions.get(i);
+        Position B = positions.get(i+1);
 
-            angles.add((float)angle);
-        }
+        angle = (float) Math.acos(Math.abs(A.getY() - B.getY()) / Math.sqrt(Math.pow(A.getX() - B.getX(), 2) + Math.pow(A.getY()-B.getY(), 2)));
 
-        return angles;
+        return angle;
     }
 
-    public List<Float> getDistances() {
-        List<Float> distances = new ArrayList<>();
+    public float getVelocity(int i) {
+        float vitesse;
 
-        for(int i=0; i<positions.size() - 1; i++) {
-            Position A = positions.get(i);
-            Position B = positions.get(i+1);
+        Position A = positions.get(i);
+        Position B = positions.get(i+1);
 
-            double dist = Math.sqrt(Math.pow(A.getX() - B.getX(), 2) + Math.pow(A.getY()-B.getY(), 2));
+        double dist = Math.sqrt(Math.pow(A.getX() - B.getX(), 2) + Math.pow(A.getY()-B.getY(), 2));
 
-            // Convertir les pixels en mètre
-            dist = dist / 100;
+        // Convertion d'une distance (en nbre de pixels) en vitesse
+        vitesse = (float) Math.min(dist * 1.0 / MAX_DIST, 1);
 
-            distances.add((float)dist);
-        }
 
-        return distances;
+        return vitesse;
     }
 
 }
