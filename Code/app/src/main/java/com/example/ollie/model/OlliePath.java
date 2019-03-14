@@ -3,14 +3,13 @@ package com.example.ollie.model;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Path {
+public class OlliePath {
 
     private List<Position> positions = new ArrayList<>();
     private static final int MAX_DIST = 50;
 
 
     public void addPosition(Position p) {
-
         positions.add(p);
     }
 
@@ -30,6 +29,9 @@ public class Path {
         Position B = positions.get(i+1);
 
         angle = (float) Math.acos(Math.abs(A.getY() - B.getY()) / Math.sqrt(Math.pow(A.getX() - B.getX(), 2) + Math.pow(A.getY()-B.getY(), 2)));
+
+        // Convert to degree
+        angle = (float) Math.toDegrees(angle);
 
         return angle;
     }

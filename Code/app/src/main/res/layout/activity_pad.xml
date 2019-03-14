@@ -7,4 +7,6 @@
     tools:context=".PadActivity"
     android:id="@+id/padView">
 
+
+
 </android.support.constraint.ConstraintLayout>

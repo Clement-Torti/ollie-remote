@@ -1,16 +1,19 @@
 package com.example.ollie;
 
-import android.support.v7.app.AppCompatActivity;
+import android.graphics.Canvas;
+import android.graphics.Color;
+import android.graphics.Paint;
+import android.graphics.Path;
 import android.os.Bundle;
 import android.view.MotionEvent;
 import android.view.View;
 
-import com.example.ollie.model.Path;
+import com.example.ollie.View.PaintView;
+import com.example.ollie.model.OlliePath;
 import com.example.ollie.model.Position;
 import com.example.ollie.model.RobotHandler;
 import com.orbotix.ConvenienceRobot;
 
-import java.util.List;
 import java.util.Timer;
 import java.util.TimerTask;
 
@@ -25,23 +28,27 @@ public class PadActivity extends BaseActivity {
     private static final int REAL_TIME_DELAY = 100;
 
     private ConvenienceRobot ollie = RobotHandler.getRobot();
-    private Path path;
+    private OlliePath olliePath;
     private Timer getMoveTimer;
     private Timer moveTimer;
     private Position lastPosition;
-    private TimerTask getMoveTask;
-    private TimerTask moveTask;
+
+    private PaintView paintView;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_pad);
 
-        // Configuration du path
-        path = new Path();
+        paintView = new PaintView(this);
+
+        setContentView(paintView);
+
+        // Configuration du olliePath
+        olliePath = new OlliePath();
         i = 0;
 
-        findViewById(R.id.padView).setOnTouchListener(new View.OnTouchListener() {
+        paintView.setOnTouchListener(new View.OnTouchListener() {
             @Override
             public boolean onTouch(View v, MotionEvent event) {
 
@@ -54,22 +61,8 @@ public class PadActivity extends BaseActivity {
         getMoveTimer = new Timer();
         moveTimer = new Timer();
 
-        // Les tâches de nos Timer
-        getMoveTask = new TimerTask() {
-            @Override
-            public void run() {
-                path.addPosition(lastPosition);
-            }
-        };
-
-        moveTask = new TimerTask() {
-            @Override
-            public void run() {
-                moveRobot();
-            }
-        };
-
     }
+    
 
     private void interpretMotion(MotionEvent event) {
         // On ajoute la position du doigt dans le tableau de positions
@@ -77,31 +70,75 @@ public class PadActivity extends BaseActivity {
 
         if(event.getAction() == MotionEvent.ACTION_DOWN) {
             System.out.println("action down");
-            getMoveTimer.scheduleAtFixedRate(getMoveTask,0, VIRTUAL_TIME_DELAY);
+            getMoveTimer.scheduleAtFixedRate(createGetMoveTask(),0, VIRTUAL_TIME_DELAY);
+
+            // Créer un nouveau chemin vide
+            paintView.clearPath();
+
+            paintView.moveTo(lastPosition.getX(), lastPosition.getY());
         }
 
         // Si on enlève notre doigt de l'écran
         if (event.getAction() == MotionEvent.ACTION_UP) {
             System.out.println("action up");
+
             getMoveTimer.cancel();
             getMoveTimer = new Timer();
+
             i = 0;
-            moveTimer.scheduleAtFixedRate(moveTask, 0, REAL_TIME_DELAY);
+            moveTimer.scheduleAtFixedRate(createMoveTask(), 0, REAL_TIME_DELAY);
+        }
+
+        if(event.getAction() == MotionEvent.ACTION_MOVE) {
+            paintView.lineTo(lastPosition.getX(), lastPosition.getY());
         }
     }
+
 
     private void moveRobot() {
 
-        if (i >= path.size() - 1) {
+        if (i >= olliePath.size() - 1) {
+            System.out.println("----------- MOVE TERMINE -----------");
             ollie.stop();
+
             moveTimer.cancel();
             moveTimer = new Timer();
-            path.clear();
+
+            olliePath.clear();
             return;
         }
 
-        ollie.drive(path.getAngle(i), path.getVelocity(i));
+        float angle = olliePath.getAngle(i);
+        float velocity = olliePath.getVelocity(i);
+
+        ollie.drive(angle, velocity);
+
+        System.out.println(" --------- Angle : " + angle + " -----------");
+        System.out.println(" --------- Velocity : " + velocity + " -----------");
 
         i++;
     }
+
+
+
+
+    private TimerTask createGetMoveTask() {
+        return new TimerTask() {
+            @Override
+            public void run() {
+                olliePath.addPosition(lastPosition);
+            }
+        };
+    }
+
+
+    private TimerTask createMoveTask() {
+        return new TimerTask() {
+            @Override
+            public void run() {
+                moveRobot();
+            }
+        };
+    }
+
 }
