@@ -38,7 +38,7 @@ public class OlliePath {
 
         // Direction haut/gauche
         if(B.getX() < A.getX() && B.getY() < A.getX()) {
-            angle -= angle * 2;
+            angle *= -1;
         }
 
         // Direction bas/droite
@@ -50,6 +50,7 @@ public class OlliePath {
         // Direction bas/gauche
         if(B.getX() < A.getX() && B.getY() > A.getY()) {
             angle += 180;
+            //angle = -90 - (90 - angle);
         }
 
 

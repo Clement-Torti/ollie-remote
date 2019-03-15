@@ -7,4 +7,5 @@
     <string name="padChoice">Pad</string>
     <string name="infoChoice">Infos</string>
     <string name="connectionChoice">Connection</string>
+    <string name="calibrationButton">Calibrate</string>
 </resources>

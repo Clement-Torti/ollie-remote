@@ -80,6 +80,8 @@ public class JoystickActivity extends BaseActivity {
     }
 
 
-
-
+    // Permet de calibrer le robot, c-a-d lui dire que son orientation actuelle correspond à l'angle 0
+    public void calibrationClick(View view) {
+        ollie.setZeroHeading();
+    }
 }

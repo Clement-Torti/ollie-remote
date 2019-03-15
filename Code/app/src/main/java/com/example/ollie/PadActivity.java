@@ -25,7 +25,7 @@ public class PadActivity extends BaseActivity {
 
     private int i;
     private static final int VIRTUAL_TIME_DELAY = 50;
-    private static final int REAL_TIME_DELAY = 100;
+    private static final int REAL_TIME_DELAY = 200;
 
     private ConvenienceRobot ollie = RobotHandler.getRobot();
     private OlliePath olliePath;
@@ -146,4 +146,7 @@ public class PadActivity extends BaseActivity {
         };
     }
 
+    public void calibrationPadClick(View view) {
+        ollie.setZeroHeading();
+    }
 }
