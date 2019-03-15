@@ -24,7 +24,7 @@ import java.util.TimerTask;
 public class PadActivity extends BaseActivity {
 
     private int i;
-    private static final int VIRTUAL_TIME_DELAY = 10;
+    private static final int VIRTUAL_TIME_DELAY = 50;
     private static final int REAL_TIME_DELAY = 100;
 
     private ConvenienceRobot ollie = RobotHandler.getRobot();
@@ -32,6 +32,7 @@ public class PadActivity extends BaseActivity {
     private Timer getMoveTimer;
     private Timer moveTimer;
     private Position lastPosition;
+    private boolean newValue = false;
 
     private PaintView paintView;
 
@@ -67,6 +68,7 @@ public class PadActivity extends BaseActivity {
     private void interpretMotion(MotionEvent event) {
         // On ajoute la position du doigt dans le tableau de positions
         lastPosition = new Position(event.getX(), event.getY());
+        newValue = true;
 
         if(event.getAction() == MotionEvent.ACTION_DOWN) {
             System.out.println("action down");
@@ -126,7 +128,10 @@ public class PadActivity extends BaseActivity {
         return new TimerTask() {
             @Override
             public void run() {
-                olliePath.addPosition(lastPosition);
+                if(newValue) {
+                    olliePath.addPosition(lastPosition);
+                    newValue = false;
+                }
             }
         };
     }

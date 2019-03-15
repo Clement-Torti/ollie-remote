@@ -10,6 +10,7 @@ public class OlliePath {
 
 
     public void addPosition(Position p) {
+        //System.out.println("New pos: X:" + p.getX() + ", Y: " + p.getY());
         positions.add(p);
     }
 
@@ -32,6 +33,27 @@ public class OlliePath {
 
         // Convert to degree
         angle = (float) Math.toDegrees(angle);
+
+        // Modif de l'angle en fonction de l'orientation
+
+        // Direction haut/gauche
+        if(B.getX() < A.getX() && B.getY() < A.getX()) {
+            angle -= angle * 2;
+        }
+
+        // Direction bas/droite
+        if(B.getX() > A.getX() && B.getY() > A.getY()) {
+            angle = 180 - angle;
+        }
+
+
+        // Direction bas/gauche
+        if(B.getX() < A.getX() && B.getY() > A.getY()) {
+            angle += 180;
+        }
+
+
+
 
         return angle;
     }
