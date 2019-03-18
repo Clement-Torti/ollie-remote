@@ -15,5 +15,6 @@
     <color name="coolBlue">#52BAFF</color>
     <color name="gray">#6f6f6f</color>
     <color name="backgroundBlue">#202F65</color>
+    <color name="black">#000000</color>
 
 </resources>

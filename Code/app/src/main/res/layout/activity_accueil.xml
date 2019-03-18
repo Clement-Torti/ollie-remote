@@ -71,17 +71,14 @@
             app:cardElevation="6dp"
             app:cardCornerRadius="12dp"
             android:layout_margin="12dp"
-            android:background="@color/white"
-
-            >
+            android:background="@color/white">
 
             <LinearLayout
                 android:orientation="vertical"
                 android:padding="16dp"
                 android:gravity="center"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                >
+                android:layout_height="wrap_content">
 
                 <ImageView
                     android:src="@drawable/joystick"
@@ -111,16 +108,14 @@
                 app:cardElevation="6dp"
                 app:cardCornerRadius="12dp"
                 android:layout_margin="12dp"
-                android:background="@color/white"
-                >
+                android:background="@color/white">
 
                 <LinearLayout
                     android:orientation="vertical"
                     android:padding="16dp"
                     android:gravity="center"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    >
+                    android:layout_height="wrap_content">
 
                     <ImageView
                         android:src="@drawable/pad"
@@ -149,16 +144,14 @@
                 app:cardElevation="6dp"
                 app:cardCornerRadius="12dp"
                 android:layout_margin="12dp"
-                android:background="@color/white"
-                >
+                android:background="@color/white">
 
                 <LinearLayout
                     android:orientation="vertical"
                     android:padding="16dp"
                     android:gravity="center"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    >
+                    android:layout_height="wrap_content">
 
                     <ImageView
                         android:src="@drawable/bluetooth"
@@ -191,16 +184,14 @@
                 app:cardElevation="6dp"
                 app:cardCornerRadius="12dp"
                 android:layout_margin="12dp"
-                android:background="@color/white"
-                >
+                android:background="@color/white">
 
                 <LinearLayout
                     android:orientation="vertical"
                     android:padding="16dp"
                     android:gravity="center"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    >
+                    android:layout_height="wrap_content">
 
                     <ImageView
                         android:src="@drawable/info"

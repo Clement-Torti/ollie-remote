@@ -12,6 +12,8 @@ import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.SeekBar;
+import android.widget.Toast;
 
 import com.example.ollie.View.PaintView;
 import com.example.ollie.model.OlliePath;
@@ -29,15 +31,13 @@ import java.util.TimerTask;
 public class PadActivity extends BaseActivity {
 
     private int i;
-    private static final int VIRTUAL_TIME_DELAY = 50;
-    private static final int REAL_TIME_DELAY = 200;
+    private static int REAL_TIME_DELAY = 150;
 
     private ConvenienceRobot ollie = RobotHandler.getRobot();
     private OlliePath olliePath;
-    private Timer getMoveTimer;
     private Timer moveTimer;
     private Position lastPosition;
-    private boolean newValue = false;
+    private boolean isStopped = true;
 
     private PaintView paintView;
 
@@ -66,11 +66,41 @@ public class PadActivity extends BaseActivity {
 
         ConstraintLayout.LayoutParams constraintLayout = new ConstraintLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
         constraintLayout.bottomToBottom = R.id.padView;
-        constraintLayout.endToEnd = R.id.padView;
-        constraintLayout.startToStart = R.id.padView;
-        constraintLayout.bottomMargin = 30;
+        constraintLayout.rightToRight = R.id.padView;
+        constraintLayout.leftToLeft = R.id.padView;
+        constraintLayout.bottomMargin = 20;
 
         maVue.addView(calibrateButton, constraintLayout);
+
+
+
+        // Création et ajout du SeekBar permettant le choix de la vitesse du Ollie
+        SeekBar seekBar = new SeekBar(this);
+        seekBar.setMax(250);
+        seekBar.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
+            @Override
+            public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
+                REAL_TIME_DELAY = progress + 50;
+            }
+
+            @Override
+            public void onStartTrackingTouch(SeekBar seekBar) {
+
+            }
+
+            @Override
+            public void onStopTrackingTouch(SeekBar seekBar) {
+
+            }
+        });
+
+        ConstraintLayout.LayoutParams constraintLayoutSeekBar = new ConstraintLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+        constraintLayout.topToTop = R.id.padView;
+        constraintLayout.rightToRight = R.id.padView;
+        constraintLayout.leftToLeft = R.id.padView;
+        constraintLayout.topMargin = 40;
+
+        maVue.addView(seekBar, constraintLayoutSeekBar);
 
 
 
@@ -88,7 +118,6 @@ public class PadActivity extends BaseActivity {
             }
         });
 
-        getMoveTimer = new Timer();
         moveTimer = new Timer();
 
     }
@@ -97,27 +126,31 @@ public class PadActivity extends BaseActivity {
     private void interpretMotion(MotionEvent event) {
         // On ajoute la position du doigt dans le tableau de positions
         lastPosition = new Position(event.getX(), event.getY());
-        newValue = true;
+        olliePath.addPosition(lastPosition);
 
         if(event.getAction() == MotionEvent.ACTION_DOWN) {
             System.out.println("action down");
-            getMoveTimer.scheduleAtFixedRate(createGetMoveTask(),0, VIRTUAL_TIME_DELAY);
 
             // Créer un nouveau chemin vide
             paintView.clearPath();
 
+            if(!isStopped) {
+                stopRobot();
+            }
+
+
+           // Affichage du chemin
             paintView.moveTo(lastPosition.getX(), lastPosition.getY());
         }
+
 
         // Si on enlève notre doigt de l'écran
         if (event.getAction() == MotionEvent.ACTION_UP) {
             System.out.println("action up");
 
-            getMoveTimer.cancel();
-            getMoveTimer = new Timer();
-
             i = 0;
             moveTimer.scheduleAtFixedRate(createMoveTask(), 0, REAL_TIME_DELAY);
+            isStopped = false;
         }
 
         if(event.getAction() == MotionEvent.ACTION_MOVE) {
@@ -127,15 +160,10 @@ public class PadActivity extends BaseActivity {
 
 
     private void moveRobot() {
-
+        //Toast.makeText(this, (i * 100 / olliePath.size()) + "%", Toast.LENGTH_LONG).show();
         if (i >= olliePath.size() - 1) {
             System.out.println("----------- MOVE TERMINE -----------");
-            ollie.stop();
-
-            moveTimer.cancel();
-            moveTimer = new Timer();
-
-            olliePath.clear();
+            stopRobot();
             return;
         }
 
@@ -151,19 +179,17 @@ public class PadActivity extends BaseActivity {
     }
 
 
+    private void stopRobot() {
+        ollie.stop();
 
+        moveTimer.cancel();
+        moveTimer = new Timer();
 
-    private TimerTask createGetMoveTask() {
-        return new TimerTask() {
-            @Override
-            public void run() {
-                if(newValue) {
-                    olliePath.addPosition(lastPosition);
-                    newValue = false;
-                }
-            }
-        };
+        olliePath.clear();
+
+        isStopped = true;
     }
+
 
 
     private TimerTask createMoveTask() {

@@ -8,6 +8,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.widget.Toast;
 
 import com.example.ollie.model.RobotHandler;
 import com.example.ollie.model.VirtualOllie;
@@ -83,7 +84,7 @@ public class AccueilActivity extends BaseActivity  implements DiscoveryAgentEven
         if(RobotHandler.getRobot() != null) {
             goToActivity(JoystickActivity.class, new HashMap<String, Serializable>());
         } else {
-            System.out.println("Robot non connecté, action impossible");
+            Toast.makeText(this, "Robot non connecté !!", Toast.LENGTH_LONG).show();
         }
     }
 
@@ -94,7 +95,7 @@ public class AccueilActivity extends BaseActivity  implements DiscoveryAgentEven
         if(RobotHandler.getRobot() != null) {
             goToActivity(PadActivity.class, new HashMap<String, Serializable>());
         } else {
-            System.out.println("Robot non connecté, action impossible");
+            Toast.makeText(this, "Robot non connecté !!", Toast.LENGTH_LONG).show();
         }
     }
 
@@ -110,6 +111,7 @@ public class AccueilActivity extends BaseActivity  implements DiscoveryAgentEven
 
     @Override
     public void handleRobotsAvailable(List<Robot> list) {
+        Toast.makeText(this, "Connexion au robot en cours ...", Toast.LENGTH_LONG).show();
         discoverRobot.connect(list.get(0));
     }
 
@@ -119,6 +121,7 @@ public class AccueilActivity extends BaseActivity  implements DiscoveryAgentEven
             case Online:
                 discoverRobot.stopDiscovery();
                 RobotHandler.setRobot(new VirtualOllie(robot));
+                Toast.makeText(this, "Robot connecté !!", Toast.LENGTH_SHORT).show();
 
             case Disconnected:
                 // On vérifie que ça soit le bon robot qui se soit déconnecté
@@ -131,7 +134,6 @@ public class AccueilActivity extends BaseActivity  implements DiscoveryAgentEven
                         e.printStackTrace();
                     }
                 }
-
         }
     }
 
