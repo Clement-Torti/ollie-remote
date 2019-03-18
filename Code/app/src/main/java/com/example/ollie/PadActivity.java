@@ -5,8 +5,13 @@ import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.Path;
 import android.os.Bundle;
+import android.print.PrintAttributes;
+import android.support.constraint.ConstraintLayout;
+import android.text.style.DrawableMarginSpan;
 import android.view.MotionEvent;
 import android.view.View;
+import android.view.ViewGroup;
+import android.widget.Button;
 
 import com.example.ollie.View.PaintView;
 import com.example.ollie.model.OlliePath;
@@ -43,7 +48,31 @@ public class PadActivity extends BaseActivity {
 
         paintView = new PaintView(this);
 
-        setContentView(paintView);
+        setContentView(R.layout.activity_pad);
+
+        // Récupération de la vue
+        ConstraintLayout maVue = findViewById(R.id.padView);
+        maVue.addView(paintView, new ConstraintLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT));
+
+        // Création et ajout du bouton permettant la récalibration du Ollie
+        Button calibrateButton = new Button(this);
+        calibrateButton.setText(R.string.calibrationButton);
+        calibrateButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                ollie.setZeroHeading();
+            }
+        });
+
+        ConstraintLayout.LayoutParams constraintLayout = new ConstraintLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+        constraintLayout.bottomToBottom = R.id.padView;
+        constraintLayout.endToEnd = R.id.padView;
+        constraintLayout.startToStart = R.id.padView;
+        constraintLayout.bottomMargin = 30;
+
+        maVue.addView(calibrateButton, constraintLayout);
+
+
 
         // Configuration du olliePath
         olliePath = new OlliePath();
@@ -146,7 +175,4 @@ public class PadActivity extends BaseActivity {
         };
     }
 
-    public void calibrationPadClick(View view) {
-        ollie.setZeroHeading();
-    }
 }
