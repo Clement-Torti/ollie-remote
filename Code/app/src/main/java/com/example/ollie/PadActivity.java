@@ -32,6 +32,9 @@ public class PadActivity extends BaseActivity {
 
     private int i;
     private static int REAL_TIME_DELAY = 150;
+    private static final int MAX_SPEED = 200;
+    private static final int MIN_SPEED = 20;
+
 
     private ConvenienceRobot ollie = RobotHandler.getRobot();
     private OlliePath olliePath;
@@ -68,7 +71,8 @@ public class PadActivity extends BaseActivity {
         constraintLayout.bottomToBottom = R.id.padView;
         constraintLayout.rightToRight = R.id.padView;
         constraintLayout.leftToLeft = R.id.padView;
-        constraintLayout.bottomMargin = 20;
+        constraintLayout.bottomMargin = 40;
+
 
         maVue.addView(calibrateButton, constraintLayout);
 
@@ -76,11 +80,13 @@ public class PadActivity extends BaseActivity {
 
         // Création et ajout du SeekBar permettant le choix de la vitesse du Ollie
         SeekBar seekBar = new SeekBar(this);
-        seekBar.setMax(250);
+        seekBar.setMax(MAX_SPEED - MIN_SPEED);
+        seekBar.setProgress((MAX_SPEED - MIN_SPEED) / 2);
+        seekBar.setBackgroundColor(getResources().getColor(R.color.backgroundBlue, getApplicationContext().getTheme()));
         seekBar.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
             @Override
             public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
-                REAL_TIME_DELAY = progress + 50;
+                REAL_TIME_DELAY = progress + MIN_SPEED;
             }
 
             @Override
@@ -94,11 +100,8 @@ public class PadActivity extends BaseActivity {
             }
         });
 
-        ConstraintLayout.LayoutParams constraintLayoutSeekBar = new ConstraintLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
-        constraintLayout.topToTop = R.id.padView;
-        constraintLayout.rightToRight = R.id.padView;
-        constraintLayout.leftToLeft = R.id.padView;
-        constraintLayout.topMargin = 40;
+        ConstraintLayout.LayoutParams constraintLayoutSeekBar = new ConstraintLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT,140);
+        constraintLayoutSeekBar.topToTop = R.id.padView;
 
         maVue.addView(seekBar, constraintLayoutSeekBar);
 

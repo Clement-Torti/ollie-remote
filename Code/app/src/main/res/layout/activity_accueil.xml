@@ -71,7 +71,8 @@
             app:cardElevation="6dp"
             app:cardCornerRadius="12dp"
             android:layout_margin="12dp"
-            android:background="@color/white">
+            android:background="@color/white"
+            >
 
             <LinearLayout
                 android:orientation="vertical"

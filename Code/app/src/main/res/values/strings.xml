@@ -8,4 +8,17 @@
     <string name="infoChoice">Infos</string>
     <string name="connectionChoice">Connection</string>
     <string name="calibrationButton">Calibrate</string>
+
+    <string name="infoTitle">Welcome to the Ollie app</string>
+    <string name="infoDesc">Information de la vue</string>
+
+    <string name="bluetoothTitle">Welcome to the Ollie app</string>
+    <string name="bluetoothDesc">Welcome to the Ollie app</string>
+
+    <string name="joystickTitle">Welcome to the Ollie app</string>
+    <string name="joystickDesc">Welcome to the Ollie app</string>
+
+    <string name="padTitle">Welcome to the Ollie app</string>
+    <string name="padDesc">Welcome to the Ollie app</string>
+
 </resources>

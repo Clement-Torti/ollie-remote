@@ -37,8 +37,8 @@ public class OlliePath {
         // Modif de l'angle en fonction de l'orientation
 
         // Direction haut/gauche
-        if(B.getX() < A.getX() && B.getY() < A.getX()) {
-            angle *= -1;
+        if(B.getX() < A.getX() && B.getY() < A.getY()) {
+            angle = 360 - angle;
         }
 
         // Direction bas/droite
@@ -50,7 +50,6 @@ public class OlliePath {
         // Direction bas/gauche
         if(B.getX() < A.getX() && B.getY() > A.getY()) {
             angle += 180;
-            //angle = -90 - (90 - angle);
         }
 
 
