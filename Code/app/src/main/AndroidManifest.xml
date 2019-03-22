@@ -19,6 +19,7 @@
         android:theme="@style/AppTheme"
         android:hardwareAccelerated="false"
         android:largeHeap="true">
+
         <activity android:name=".InfosActivity"></activity>
         <activity android:name=".PadActivity" />
         <activity android:name=".JoystickActivity" />

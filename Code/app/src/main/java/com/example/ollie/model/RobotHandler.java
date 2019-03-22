@@ -17,7 +17,7 @@ import java.util.List;
 
 public class RobotHandler {
 
-    private static ConvenienceRobot robot;
+    private static ConvenienceRobot robot = null;
 
     public static void setRobot(ConvenienceRobot _robot) {
         robot = _robot;

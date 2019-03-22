@@ -111,7 +111,9 @@ public class AccueilActivity extends BaseActivity  implements DiscoveryAgentEven
 
     @Override
     public void handleRobotsAvailable(List<Robot> list) {
-        Toast.makeText(this, "Connexion au robot en cours ...", Toast.LENGTH_LONG).show();
+        if (RobotHandler.getRobot() == null) {
+            Toast.makeText(this, "Connexion au robot en cours ...", Toast.LENGTH_LONG).show();
+        }
         discoverRobot.connect(list.get(0));
     }
 

@@ -41,6 +41,7 @@ public class PadActivity extends BaseActivity {
     private Timer moveTimer;
     private Position lastPosition;
     private boolean isStopped = true;
+    private Button startRobotButton;
 
     private PaintView paintView;
 
@@ -69,8 +70,8 @@ public class PadActivity extends BaseActivity {
 
         ConstraintLayout.LayoutParams constraintLayout = new ConstraintLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
         constraintLayout.bottomToBottom = R.id.padView;
-        constraintLayout.rightToRight = R.id.padView;
         constraintLayout.leftToLeft = R.id.padView;
+        constraintLayout.leftMargin = 40;
         constraintLayout.bottomMargin = 40;
 
 
@@ -104,6 +105,40 @@ public class PadActivity extends BaseActivity {
         constraintLayoutSeekBar.topToTop = R.id.padView;
 
         maVue.addView(seekBar, constraintLayoutSeekBar);
+
+
+
+        // Création du bouton permettant de lancer le robot
+        startRobotButton = new Button(this);
+        startRobotButton.setEnabled(false);
+        startRobotButton.setBackgroundColor(getResources().getColor(R.color.backgroundBlue, getTheme()));
+        startRobotButton.setVisibility(View.GONE);
+
+        startRobotButton.setText(R.string.startRobotButton);
+        startRobotButton.setTextColor(getResources().getColor(R.color.white, getTheme()));
+        startRobotButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                moveTimer.scheduleAtFixedRate(createMoveTask(), 0, REAL_TIME_DELAY);
+                isStopped = false;
+                startRobotButton.setEnabled(false);
+                startRobotButton.setVisibility(View.GONE);
+
+            }
+        });
+
+        ConstraintLayout.LayoutParams startConstraintLayout = new ConstraintLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+        startConstraintLayout.bottomToBottom = R.id.padView;
+        startConstraintLayout.rightToRight = R.id.padView;
+        startConstraintLayout.rightMargin = 40;
+        startConstraintLayout.bottomMargin = 40;
+
+
+        maVue.addView(startRobotButton, startConstraintLayout);
+
+
+
+
 
 
 
@@ -151,9 +186,11 @@ public class PadActivity extends BaseActivity {
         if (event.getAction() == MotionEvent.ACTION_UP) {
             System.out.println("action up");
 
+            startRobotButton.setEnabled(true);
+            startRobotButton.setVisibility(View.VISIBLE);
+
             i = 0;
-            moveTimer.scheduleAtFixedRate(createMoveTask(), 0, REAL_TIME_DELAY);
-            isStopped = false;
+
         }
 
         if(event.getAction() == MotionEvent.ACTION_MOVE) {

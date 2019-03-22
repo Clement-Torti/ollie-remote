@@ -2,23 +2,25 @@
 <resources>
     <string name="app_name">Ollie</string>
     <string name="menu">Menu</string>
-    <string name="info">Choose a way to pilot Ollie</string>
+    <string name="menuInfo">Choose a way to pilot Ollie</string>
     <string name="joystickChoice">Joystick</string>
     <string name="padChoice">Pad</string>
     <string name="infoChoice">Infos</string>
     <string name="connectionChoice">Connection</string>
     <string name="calibrationButton">Calibrate</string>
+    <string name="startRobotButton">Start</string>
 
     <string name="infoTitle">Welcome to the Ollie app</string>
-    <string name="infoDesc">Information de la vue</string>
+    <string name="infoDesc">Our app allows you to pilot your favorite robot in two different way: Joystick mode and Pad mode.
+                            When the robot is connected and the mode is selected, place ollie on the ground on the direction of your choice, then click the calibrate button.</string>
 
-    <string name="bluetoothTitle">Welcome to the Ollie app</string>
-    <string name="bluetoothDesc">Welcome to the Ollie app</string>
+    <string name="bluetoothTitle">Bluetooth connexion</string>
+    <string name="bluetoothDesc">The app connects to the robot via bluetooth. You just need to click on the bluetooth button and have the robot near you. When the robot gets blue, the connexion succeed. To access the joystick and the pad, you must be conncted.</string>
 
-    <string name="joystickTitle">Welcome to the Ollie app</string>
-    <string name="joystickDesc">Welcome to the Ollie app</string>
+    <string name="joystickTitle">Joystick</string>
+    <string name="joystickDesc">Pilots your ollie via the joystick.</string>
 
-    <string name="padTitle">Welcome to the Ollie app</string>
-    <string name="padDesc">Welcome to the Ollie app</string>
+    <string name="padTitle">Pad</string>
+    <string name="padDesc">Pilots your ollie via the pad. Draw the path on the screen and the robot will follow it. The change the distances, play with the slider value.</string>
 
 </resources>

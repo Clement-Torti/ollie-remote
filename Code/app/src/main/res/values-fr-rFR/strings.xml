@@ -2,23 +2,27 @@
 <resources>
     <string name="app_name">Ollie</string>
     <string name="menu">Accueil</string>
-    <string name="info">Choix de pilotage du Ollie</string>
+    <string name="menuInfo">Choix de pilotage du Ollie</string>
     <string name="joystickChoice">Joystick</string>
     <string name="padChoice">Pad</string>
     <string name="infoChoice">Infos</string>
     <string name="connectionChoice">Connexion</string>
     <string name="calibrationButton">Calibrer</string>
+    <string name="startRobotButton">Start</string>
 
     <string name="infoTitle">Bienvenue dans l\'application Ollie</string>
-    <string name="infoDesc">Information de la vue</string>
+    <string name="infoDesc">Notre application vous permet de piloter votre robot préféré de différentes manières, en mode Joystick ou en mode Pad.
+                            Une fois le robot connecté et le mode de pilotage choisit, posez le Ollie avec la borne de chargement face à vous,
+                            puis appuyer sur le bouton de Calibrage.</string>
 
     <string name="bluetoothTitle">Connexion au robot</string>
     <string name="bluetoothDesc">L\'application se connecte en bluetooth au robot. Il suffit de cliquer sur le logo, bluetooth et d\'avoir à portée de main le robot. Lorsque le robot devient bleu, la connexion a réussie. Pour accéder au joystick et au pad, il faut être connecté.</string>
 
-    <string name="joystickTitle">Welcome to the Ollie app</string>
-    <string name="joystickDesc">Welcome to the Ollie app</string>
+    <string name="joystickTitle">Joystick</string>
+    <string name="joystickDesc">Piloter votre Ollie avec un Joystick.</string>
 
-    <string name="padTitle">Welcome to the Ollie app</string>
-    <string name="padDesc">Welcome to the Ollie app</string>
+    <string name="padTitle">Pad</string>
+    <string name="padDesc">Piloter votre Ollie avec un Pad. Dessiner une trajectoire sur l\'écran et votre Ollie l\'effectuera.
+                            Pour changer les distances parcourues par le Ollie, utilisez le slider.</string>
 
 </resources>
