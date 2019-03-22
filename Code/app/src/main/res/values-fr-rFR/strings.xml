@@ -16,7 +16,9 @@
                             puis appuyer sur le bouton de Calibrage.</string>
 
     <string name="bluetoothTitle">Connexion au robot</string>
-    <string name="bluetoothDesc">L\'application se connecte en bluetooth au robot. Il suffit de cliquer sur le logo, bluetooth et d\'avoir à portée de main le robot. Lorsque le robot devient bleu, la connexion a réussie. Pour accéder au joystick et au pad, il faut être connecté.</string>
+    <string name="bluetoothDesc">L\'application se connecte en Bluetooth au robot. Il suffit de cliquer sur le logo Bluetooth de l\'accueil et d\'avoir à portée de main le robot.
+                                Lorsque le robot devient bleu, la connexion a réussie.
+                                Pour accéder au joystick et au pad, il faut être connecté.</string>
 
     <string name="joystickTitle">Joystick</string>
     <string name="joystickDesc">Piloter votre Ollie avec un Joystick.</string>
@@ -25,4 +27,5 @@
     <string name="padDesc">Piloter votre Ollie avec un Pad. Dessiner une trajectoire sur l\'écran et votre Ollie l\'effectuera.
                             Pour changer les distances parcourues par le Ollie, utilisez le slider.</string>
 
+    <string name="ollieCreator">Florent Becouze et Clément Torti\nPE1 IUT Informatique 2019</string>
 </resources>

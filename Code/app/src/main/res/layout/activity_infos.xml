@@ -119,16 +119,27 @@
             android:src="@drawable/pad" />
 
         <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="20dp"
+        android:elevation="10dp"
+        android:padding="10dp"
+        android:text="@string/padDesc"
+        android:textAlignment="center"
+        android:textColor="@color/black"
+        android:textSize="16dp"/>
+
+
+        <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_margin="20dp"
             android:elevation="10dp"
             android:padding="10dp"
-            android:text="@string/padDesc"
+            android:text="@string/ollieCreator"
             android:textAlignment="center"
             android:textColor="@color/black"
             android:textSize="16dp"/>
-
 
     </LinearLayout>
 

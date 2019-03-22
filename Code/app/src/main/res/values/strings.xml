@@ -23,4 +23,6 @@
     <string name="padTitle">Pad</string>
     <string name="padDesc">Pilots your ollie via the pad. Draw the path on the screen and the robot will follow it. The change the distances, play with the slider value.</string>
 
+
+    <string name="ollieCreator">Florent Becouze and Clément Torti\nPE1 IUT Informatique 2019</string>
 </resources>
