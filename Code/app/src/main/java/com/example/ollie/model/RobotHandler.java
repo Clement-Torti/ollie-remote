@@ -19,13 +19,18 @@ public class RobotHandler {
 
     private static ConvenienceRobot robot = null;
 
+
     public static void setRobot(ConvenienceRobot _robot) {
         robot = _robot;
     }
 
-    public static ConvenienceRobot getRobot() { return robot; }
+    public static ConvenienceRobot getRobot() {
+        return robot;
+    }
 
-    public static void deleteRobot() { robot = null; }
+    public static void deleteRobot() {
+        robot = null;
+    }
 
 
 

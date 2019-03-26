@@ -22,18 +22,6 @@ public class BaseActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
     }
 
-    /**
-     * Encapsule le code lié à la navigation d'une activité à l'autre par un bouton.
-     */
-    protected void configureNavigationBtn(Button btn, final Class<?> cls, final Map<String, Serializable> args) {
-        btn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                goToActivity(cls, args);
-            }
-        });
-
-    }
 
     protected void goToActivity(final Class<?> cls, final Map<String, Serializable> args) {
         Intent navIntent = new Intent(getApplicationContext(), cls);

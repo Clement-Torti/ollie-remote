@@ -20,7 +20,9 @@ public class OlliePath {
         positions.clear();
     }
 
-    public int size() { return positions.size(); }
+    public int size() {
+        return positions.size();
+    }
 
 
     public float getAngle(int i) {
