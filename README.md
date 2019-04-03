@@ -1,5 +1,7 @@
 # Ollie
 
+**Veuillez regarder la branche V2**
+
 Notre application vous permet de piloter votre robot préféré de différentes manières, en mode Joystick ou en mode Pad.
 Une fois le robot connecté et le mode de pilotage choisit, posez le Ollie avec la borne de chargement face à vous,
 puis appuyer sur le bouton de Calibrage.
